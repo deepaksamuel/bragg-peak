@@ -1,0 +1,19 @@
+# Macro file for example B1
+#
+# Can be run in batch, without graphic
+# or interactively: Idle> /control/execute run1.mac
+#
+# Change the default number of workers (in multi-threading mode)
+/run/numberOfThreads 4
+#
+# Initialize kernel
+/run/initialize
+/score/create/boxMesh boxMesh_1
+/score/mesh/boxSize 5. 5. 30. cm
+/score/mesh/nBin 1 1 300
+/score/quantity/energyDeposit doseScorer
+/score/close
+/gun/particle proton
+/gun/energy 250 MeV
+/run/beamOn 1000000
+/score/dumpQuantityToFile boxMesh_1 doseScorer 250-MEV.txt

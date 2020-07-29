@@ -44,6 +44,7 @@
 
 #include "Randomize.hh"
 
+#include "G4ScoringManager.hh"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 int main(int argc,char** argv)
@@ -70,6 +71,7 @@ int main(int argc,char** argv)
   //
   // Detector construction
   runManager->SetUserInitialization(new B1DetectorConstruction());
+  G4ScoringManager* scoringManager =  G4ScoringManager::GetScoringManager();
 
   // Physics list
   G4VModularPhysicsList* physicsList = new QBBC;
