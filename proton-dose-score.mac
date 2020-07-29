@@ -9,11 +9,12 @@
 # Initialize kernel
 /run/initialize
 /score/create/boxMesh boxMesh_1
-/score/mesh/boxSize 5. 5. 30. cm
+/score/mesh/boxSize 2.5 2.5 15. cm
 /score/mesh/nBin 1 1 300
 /score/quantity/energyDeposit doseScorer
 /score/close
 /gun/particle proton
-/gun/energy 250 MeV
-/run/beamOn 1000000
+/gun/energy 100 MeV
+/run/beamOn 100000
 /score/dumpQuantityToFile boxMesh_1 doseScorer 250-MEV.txt
+#/score/drawProjection boxMesh_1 doseScorer
