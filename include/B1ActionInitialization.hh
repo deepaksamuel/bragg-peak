@@ -37,11 +37,11 @@
 class B1ActionInitialization : public G4VUserActionInitialization
 {
   public:
-    B1ActionInitialization();
+    B1ActionInitialization(float enrgy);
     virtual ~B1ActionInitialization();
-
     virtual void BuildForMaster() const;
     virtual void Build() const;
+    float energy;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

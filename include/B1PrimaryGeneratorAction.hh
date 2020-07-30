@@ -46,9 +46,9 @@ class G4Box;
 class B1PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 {
   public:
-    B1PrimaryGeneratorAction();    
+    B1PrimaryGeneratorAction(float enrgy);
     virtual ~B1PrimaryGeneratorAction();
-
+    //void SetParticleEnergy(float e){energy=e;}
     // method from the base class
     virtual void GeneratePrimaries(G4Event*);         
   
@@ -58,6 +58,7 @@ class B1PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
   private:
     G4ParticleGun*  fParticleGun; // pointer a to G4 gun class
     G4Box* fEnvelopeBox;
+    float energy;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

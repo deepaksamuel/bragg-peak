@@ -87,6 +87,8 @@ void B1RunAction::BeginOfRunAction(const G4Run*)
 
 void B1RunAction::EndOfRunAction(const G4Run* run)
 {
+
+
 //  G4int nofEvents = run->GetNumberOfEvent();
 //  if (nofEvents == 0) return;
 

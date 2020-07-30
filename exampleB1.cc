@@ -49,70 +49,93 @@
 
 int main(int argc,char** argv)
 {
-  // Detect interactive mode (if no arguments) and define UI session
-  //
-  G4UIExecutive* ui = 0;
-  if ( argc == 1 ) {
-    ui = new G4UIExecutive(argc, argv);
-  }
+    // First argument: threads, Second: Energy Third: Events
+    // Detect interactive mode (if no arguments) and define UI session
+    //
+    if(argc!=4){
+        G4cout<<"Please enter the variables: Number of threads, Particle Energy (MeV) and Number of Events\n";
+        exit(0);
+    }
+    G4UIExecutive* ui = 0;
+    if ( argc != 4 ) {
+        ui = new G4UIExecutive(argc, argv);
+    }
 
-  // Optionally: choose a different Random engine...
-  // G4Random::setTheEngine(new CLHEP::MTwistEngine);
-  
-  // Construct the default run manager
-  //
+    // Optionally: choose a different Random engine...
+    // G4Random::setTheEngine(new CLHEP::MTwistEngine);
+
+    // Construct the default run manager
+    //
 #ifdef G4MULTITHREADED
-  G4MTRunManager* runManager = new G4MTRunManager;
+    G4MTRunManager* runManager = new G4MTRunManager;
 #else
-  G4RunManager* runManager = new G4RunManager;
+    G4RunManager* runManager = new G4RunManager;
 #endif
 
-  // Set mandatory initialization classes
-  //
-  // Detector construction
-  runManager->SetUserInitialization(new B1DetectorConstruction());
-  G4ScoringManager* scoringManager =  G4ScoringManager::GetScoringManager();
+    // Set mandatory initialization classes
+    //
+    // Detector construction
+    runManager->SetUserInitialization(new B1DetectorConstruction());
+    G4ScoringManager* scoringManager =  G4ScoringManager::GetScoringManager();
 
-  // Physics list
-  G4VModularPhysicsList* physicsList = new QBBC;
-  physicsList->SetVerboseLevel(1);
-  runManager->SetUserInitialization(physicsList);
+    // Physics list
+    G4VModularPhysicsList* physicsList = new QBBC;
+    physicsList->SetVerboseLevel(0);
+    runManager->SetUserInitialization(physicsList);
     
-  // User action initialization
-  runManager->SetUserInitialization(new B1ActionInitialization());
-  
-  // Initialize visualization
-  //
-  G4VisManager* visManager = new G4VisExecutive;
-  // G4VisExecutive can take a verbosity argument - see /vis/verbose guidance.
-  // G4VisManager* visManager = new G4VisExecutive("Quiet");
-  visManager->Initialize();
+    // User action initialization
+    runManager->SetUserInitialization(new B1ActionInitialization(float(atof(argv[2]))));
 
-  // Get the pointer to the User Interface manager
-  G4UImanager* UImanager = G4UImanager::GetUIpointer();
+    // Initialize visualization
+    //
+    G4VisManager* visManager = new G4VisExecutive;
+    // G4VisExecutive can take a verbosity argument - see /vis/verbose guidance.
+    // G4VisManager* visManager = new G4VisExecutive("Quiet");
+    visManager->Initialize();
 
-  // Process macro or start UI session
-  //
-  if ( ! ui ) { 
-    // batch mode
-    G4String command = "/control/execute ";
-    G4String fileName = argv[1];
-    UImanager->ApplyCommand(command+fileName);
-  }
-  else { 
-    // interactive mode
-    UImanager->ApplyCommand("/control/execute init_vis.mac");
-    ui->SessionStart();
-    delete ui;
-  }
+    // Get the pointer to the User Interface manager
+    G4UImanager* UImanager = G4UImanager::GetUIpointer();
 
-  // Job termination
-  // Free the store: user actions, physics_list and detector_description are
-  // owned and deleted by the run manager, so they should not be deleted 
-  // in the main() program !
-  
-  delete visManager;
-  delete runManager;
+    // Process macro or start UI session
+    //
+    if ( ! ui ) {
+        // batch mode
+        //G4String command = "/control/execute ";
+        //G4String fileName = argv[1];
+        //UImanager->ApplyCommand(command+fileName);
+        runManager->SetNumberOfThreads(atoi(argv[1]));
+        UImanager->ApplyCommand("/run/initialize");
+        UImanager->ApplyCommand("/run/verbose 0");
+        UImanager->ApplyCommand("/event/verbose 0");
+        UImanager->ApplyCommand("/track/verbose 0");
+        UImanager->ApplyCommand("/score/create/boxMesh boxMesh_1");
+        UImanager->ApplyCommand("/score/mesh/boxSize 2.5 2.5 15. cm");
+        UImanager->ApplyCommand("/score/mesh/nBin 1 1 300");
+        UImanager->ApplyCommand("/score/quantity/energyDeposit doseScorer");
+        UImanager->ApplyCommand("/score/close");
+
+        G4String beamOn = "/run/beamOn ";
+        beamOn.append(argv[3]);
+        UImanager->ApplyCommand(beamOn);
+        G4String str = "/score/dumpQuantityToFile boxMesh_1 doseScorer ";
+        str.append(argv[2]).append("-MEV-");
+        str.append(argv[3]).append("-EVTS.txt");
+        UImanager->ApplyCommand(str);
+    }
+    else {
+        // interactive mode
+        UImanager->ApplyCommand("/control/execute init_vis.mac");
+        ui->SessionStart();
+        delete ui;
+    }
+
+    // Job termination
+    // Free the store: user actions, physics_list and detector_description are
+    // owned and deleted by the run manager, so they should not be deleted
+    // in the main() program !
+
+    delete visManager;
+    delete runManager;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo.....
