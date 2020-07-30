@@ -1,13 +1,10 @@
 This demo program computes the dose-depth profile of protons in water
 
 -A water tub of dimenstions 5 x 5 x 30 cm in kept inside a world volume with a size slightly bigger than the water tub (factor 1.2)
+-A scoring volume with a size similar to the water tub is also created with a 300 bins along z and 1 bin along x any y is created
 -Protons are shot from one end of the water tub
--The proton-dose-score.mac file creates a Box scoring volume (energyDeposit) of similar size of the water tub with binning along z to be 300 corresponding to 1 mm. The bins along x and y are set to 1.
--The mac file also dumps the energyDeposit parameter at all bins at the end of the run. The mac file has the setting for Beam energy and number of particles.
-
--On a system where Geant4 is setup, one can compile the file and run two modes:
--non-interactive mode: ./exampleB1.out proton-dose-score.mac in which case a file (whose name can be set in the proton-dose-score.mac) is created at the end of the run. No visualization is shown in this case
--interactive mode: ./exampleB1.out. The visualization shows up and one can run the command /control/execute proton-dose-score.mac within it. However, one has to comment the /run/numberOfThreads 4 command in proton-dose-score.mac before that
--- Also for every run the scoring mesh name has to be changed in this case.
-
+- On a system where Geant4 is setup:
+- Compile the code and run ./exampleB1 4 100 10000
+- The above command will shoot 10000 protons of energy 100 MeV using 4 threads
+- At the end of the run, the contents of the scoring volume are dumped to a file with a name energy-MEV-events-EVTS.txt
 -- There is a file called dose-depth.py which can be used to plot the content of the output file to see the Bragg-peak.
