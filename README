@@ -8,3 +8,10 @@ This demo program computes the dose-depth profile of protons in water
 - The above command will shoot 10000 protons of energy 100 MeV using 4 threads
 - At the end of the run, the contents of the scoring volume are dumped to a file with a name energy-MEV-events-EVTS.txt
 -- There is a file called dose-depth.py which can be used to plot the content of the output file to see the Bragg-peak.
+-If you want to loop over many energies, then run ./exampleB1 4 100 200 2 10000:
+-- The above command will generate a set of commands which you need to copy and paste in the terminal
+-- This will generate dose-depth curves from 100 MeV to 200 Mev with step size of 2 with 10000 events for each energy
+
+-Running without any arguments will open the interactive terminal which can be used to check the geometry.
+-The data folder contains depth-dose curve for the range of energies relavant to proton therapy 
+-The QBBC physics list was used to generate the data.

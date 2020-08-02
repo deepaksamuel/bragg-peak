@@ -46,7 +46,7 @@ class G4Box;
 class B1PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 {
   public:
-    B1PrimaryGeneratorAction(float enrgy);
+    B1PrimaryGeneratorAction(float enrgy=100);
     virtual ~B1PrimaryGeneratorAction();
     //void SetParticleEnergy(float e){energy=e;}
     // method from the base class
