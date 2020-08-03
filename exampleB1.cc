@@ -147,8 +147,8 @@ int main(int argc,char** argv)
             UImanager->ApplyCommand("/event/verbose 0");
             UImanager->ApplyCommand("/track/verbose 0");
             UImanager->ApplyCommand("/score/create/boxMesh boxMesh_1");
-            UImanager->ApplyCommand("/score/mesh/boxSize 2.5 2.5 15. cm");
-            UImanager->ApplyCommand("/score/mesh/nBin 1 1 300");
+            UImanager->ApplyCommand("/score/mesh/boxSize 2.5 2.5 25. cm");
+            UImanager->ApplyCommand("/score/mesh/nBin 1 1 500");
             UImanager->ApplyCommand("/score/quantity/energyDeposit doseScorer");
             UImanager->ApplyCommand("/score/close");
 

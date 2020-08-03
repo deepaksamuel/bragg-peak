@@ -61,7 +61,7 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
   
   // Envelope parameters
   //
-  G4double env_sizeXY = 5*cm, env_sizeZ = 30*cm;
+  G4double env_sizeXY = 5*cm, env_sizeZ = 50*cm;
   G4Material* env_mat = nist->FindOrBuildMaterial("G4_WATER");
    
   // Option to switch on/off checking of volumes overlaps
