@@ -16,9 +16,10 @@ for file in os.listdir(directory):
      if filename.endswith(".txt"): #or filename.endswith(".py"): 
          print(os.path.join(directory, filename))
          df = pd.read_csv(os.path.join(directory, filename),skiprows=3,header=0,names=colnames)   
-         plt.scatter(df['Z'],df['Total Dose'])
+#         plt.scatter(df['Z'],df['Entries'])
+         plt.plot(df['Z'],df['Total Dose'])
          # print(os.path.join(directory, filename))
-         continue
+         #break
      else:
          continue
 
