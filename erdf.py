@@ -8,7 +8,7 @@ import os
 
 directory = "data" # the folder containing all the depth-dose data
 colnames=['X', 'Y', 'Z', 'Total Dose', 'Total2','Entries']
-for i in range(70,180) :
+for i in range(151,160) :
     first_val=[]
     for file in os.listdir(directory):
         filename = os.fsdecode(file)
@@ -21,5 +21,8 @@ for i in range(70,180) :
         else:
             continue
     plt.plot(first_val)
+
+plt.show()
+
 
 # %%
