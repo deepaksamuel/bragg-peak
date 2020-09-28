@@ -1,5 +1,5 @@
 #%%
-# plots the ERDF distribution from the datasets in data folder
+# creates the erdf file and also plots the erdf curves.
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -8,7 +8,8 @@ import os
 
 directory = "data" # the folder containing all the depth-dose data
 colnames=['X', 'Y', 'Z', 'Total Dose', 'Total2','Entries']
-for i in range(151,160) :
+dd =[]
+for i in range(0,298) :
     first_val=[]
     for file in os.listdir(directory):
         filename = os.fsdecode(file)
@@ -21,8 +22,12 @@ for i in range(151,160) :
         else:
             continue
     plt.plot(first_val)
-
+    dd.append(first_val)
+    
+np.savetxt('erdf.txt',dd,delimiter='\t')
 plt.show()
+# ERDF data: Columns correspond to energy. First column: 100 MeV Last column: 250 MeV, Step: 2 MeV. 
+# Rows correspond to WEPL. First row: 0 mm; last row: 299 mm; step: 1 mm
 
 
 # %%
