@@ -17,6 +17,6 @@ for file in os.listdir(directory):
         continue
     else:
         continue
-
+plt.show()
 
 # %%
